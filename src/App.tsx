@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useCallback, useEffect} from "react"
+import {observer} from "mobx-react-lite"
+import "./App.css"
+import {snake} from "index"
+import Field from "components/field/ui/Field"
+import {Snake} from "components/snake/model/Snake"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const arrowsListenerMemo = useCallback((ev: globalThis.KeyboardEvent, snake: Snake) => {
+        snake.changeMovementDirect(ev)
+    }, [snake.chains])
+
+    useEffect(() => {
+        const handleKeydown = (ev: globalThis.KeyboardEvent) => {
+            arrowsListenerMemo(ev, snake)
+        }
+        window.addEventListener("keydown", handleKeydown)
+
+        return () => {
+            window.removeEventListener("keydown", handleKeydown)
+        }
+    }, [arrowsListenerMemo])
+
+    return (
+        <div className="App">
+            <Field/>
+        </div>
+    )
 }
 
-export default App;
+export default observer(App)
