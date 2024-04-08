@@ -1,9 +1,11 @@
 .App {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background: grey;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: #e1ffe1;
+    flex-direction: column;
+    gap: 10px;
 }

@@ -22,12 +22,17 @@ export class Snake {
     private _chains: Chain[] = initSnakeState
     private _target: Chain | null = null
     private _movementDirection: MovementDirection = MovementDirection.NORTH
+    private _record: string = "0"
 
     constructor() {
         makeAutoObservable(this)
+        const recordFromSS = localStorage.getItem("snake-count-record")
+        if (recordFromSS) {
+            this._record = recordFromSS
+        }
         setInterval(() => {
             this.makeStep()
-        }, 100)
+        }, 75)
         this._target = this.createTarget()
     }
 
@@ -49,6 +54,10 @@ export class Snake {
 
     private getHighestId() {
         return this._chains.slice().sort((a, b) => b.id - a.id)[0].id
+    }
+
+    get record(): string {
+        return this._record
     }
 
     public makeStep() {
@@ -135,6 +144,11 @@ export class Snake {
 
         if (checkBordersCross() || typeof checkSelfCross() !== "undefined") {
             window.alert("end game")
+            if (this._chains.length - 5 > +this._record) {
+                localStorage.setItem("snake-count-record", JSON.stringify(this._chains.length - 5))
+                this._record = (this._chains.length - 5).toString()
+                window.alert(`congratulations, new record ${this._record}`)
+            }
             this.refreshGame()
         }
     }

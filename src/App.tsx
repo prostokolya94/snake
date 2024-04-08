@@ -4,6 +4,7 @@ import "./App.css"
 import {snake} from "index"
 import Field from "components/field/ui/Field"
 import {Snake} from "components/snake/model/Snake"
+import CountAndRecordWidget from "components/count/CountAndRecordWidget"
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
 
     return (
         <div className="App">
+            <CountAndRecordWidget/>
             <Field/>
         </div>
     )
